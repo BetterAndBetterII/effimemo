@@ -3,51 +3,52 @@
 [![PyPI version](https://badge.fury.io/py/effimemo.svg)](https://badge.fury.io/py/effimemo)
 [![Python Support](https://img.shields.io/pypi/pyversions/effimemo.svg)](https://pypi.org/project/effimemo/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://github.com/BetterAndBetterII/effimemo/workflows/Tests/badge.svg)](https://github.com/BetterAndBetterII/effimemo/actions)
 [![Coverage](https://img.shields.io/badge/coverage-80%25-green.svg)](https://github.com/BetterAndBetterII/effimemo)
 
-一个用于管理大语言模型（LLM）上下文窗口的Python包，支持智能压缩和多种裁切策略。
+A Python package for managing Large Language Model (LLM) context windows with intelligent compression and multiple truncation strategies.
 
-## 功能特性
+[中文文档](README_CN.md) | English
 
-- **智能上下文管理**：自动管理对话历史，确保不超过token限制
-- **多种压缩策略**：支持 `first`、`last`、`selective` 和 `summary` 四种策略
-- **灵活配置**：可自定义最大token数、模型类型等参数
-- **系统消息保护**：可选择性保留重要的系统消息
-- **OpenAI集成**：支持OpenAI API进行智能摘要压缩
-- **工具调用支持**：完整支持OpenAI的function calling和tool使用
-- **高测试覆盖率**：80%+ 的测试覆盖率，确保代码质量
+## Features
 
-## 安装
+- **Intelligent Context Management**: Automatically manage conversation history to ensure token limits are not exceeded
+- **Multiple Compression Strategies**: Support for `first`, `last`, `selective`, and `summary` strategies
+- **Flexible Configuration**: Customizable maximum tokens, model types, and other parameters
+- **System Message Protection**: Optional preservation of important system messages
+- **OpenAI Integration**: Support for OpenAI API for intelligent summary compression
+- **Tool Calling Support**: Full support for OpenAI function calling and tool usage
+- **High Test Coverage**: 80%+ test coverage ensuring code quality
 
-### 基础安装
+## Installation
+
+### Basic Installation
 ```bash
 pip install effimemo
 ```
 
-### 可选依赖
+### Optional Dependencies
 ```bash
-# 支持OpenAI摘要策略
+# Support for OpenAI summary strategy
 pip install effimemo[openai]
 
-# 支持selective压缩策略
+# Support for selective compression strategy
 pip install effimemo[compression]
 
-# 开发依赖
+# Development dependencies
 pip install effimemo[dev]
 
-# 安装所有依赖
+# Install all dependencies
 pip install effimemo[openai,compression,dev]
 ```
 
-## 快速开始
+## Quick Start
 
-### 基础用法
+### Basic Usage
 
 ```python
 from effimemo import create_context_manager
 
-# 创建上下文管理器
+# Create context manager
 manager = create_context_manager(
     max_tokens=8192,
     model_name="gpt-4",
@@ -55,28 +56,28 @@ manager = create_context_manager(
     preserve_system=True
 )
 
-# 使用管理器处理对话
+# Use manager to process conversations
 messages = [
-    {"role": "system", "content": "你是一个有用的助手"},
-    {"role": "user", "content": "你好"},
-    {"role": "assistant", "content": "你好！有什么可以帮助你的吗？"},
-    {"role": "user", "content": "请告诉我关于量子物理的知识"}
+    {"role": "system", "content": "You are a helpful assistant"},
+    {"role": "user", "content": "Hello"},
+    {"role": "assistant", "content": "Hello! How can I help you today?"},
+    {"role": "user", "content": "Tell me about quantum physics"}
 ]
 
-# 压缩上下文（为响应预留1000个token）
+# Compress context (reserve 1000 tokens for response)
 compressed_messages = manager.compress(messages, reserve_tokens=1000)
 
-# 计算token数量
+# Count tokens
 token_count = manager.count_tokens(messages)
-print(f"原始消息token数: {token_count}")
+print(f"Original message token count: {token_count}")
 ```
 
-### 直接使用ContextManager
+### Direct ContextManager Usage
 
 ```python
 from effimemo import ContextManager
 
-# 创建管理器实例
+# Create manager instance
 manager = ContextManager(
     max_tokens=4096,
     model_name="gpt-3.5-turbo",
@@ -84,57 +85,57 @@ manager = ContextManager(
     preserve_system=True
 )
 
-# 处理长对话
+# Process long conversations
 long_conversation = [
-    {"role": "system", "content": "你是一个专业的编程助手"},
-    # ... 很多对话消息
+    {"role": "system", "content": "You are a professional programming assistant"},
+    # ... many conversation messages
 ]
 
-# 压缩对话
+# Compress conversation
 result = manager.compress(long_conversation)
 ```
 
-## 压缩策略详解
+## Compression Strategies
 
-### 1. Last策略 (默认)
-保留最近的消息，删除较早的消息：
+### 1. Last Strategy (Default)
+Keep recent messages, remove earlier messages:
 ```python
 manager = create_context_manager(strategy="last")
 ```
 
-### 2. First策略
-保留最早的消息，删除较新的消息：
+### 2. First Strategy
+Keep earliest messages, remove newer messages:
 ```python
 manager = create_context_manager(strategy="first")
 ```
 
-### 3. Selective策略
-使用智能压缩算法减少消息内容：
+### 3. Selective Strategy
+Use intelligent compression algorithms to reduce message content:
 ```python
-# 需要安装: pip install effimemo[compression]
+# Requires: pip install effimemo[compression]
 manager = create_context_manager(strategy="selective")
 ```
 
-### 4. Summary策略
-使用OpenAI API生成对话摘要：
+### 4. Summary Strategy
+Use OpenAI API to generate conversation summaries:
 ```python
 import openai
 
-# 需要安装: pip install effimemo[openai]
+# Requires: pip install effimemo[openai]
 client = openai.OpenAI(api_key="your-api-key")
 
 manager = create_context_manager(
     strategy="summary",
     openai_client=client,
     summary_model="gpt-3.5-turbo",
-    preserve_recent=3,  # 保留最近3条消息
-    summary_prompt="请简洁地总结以下对话内容：\n{conversation}"
+    preserve_recent=3,  # Keep last 3 messages
+    summary_prompt="Please concisely summarize the following conversation:\n{conversation}"
 )
 ```
 
-## 高级用法
+## Advanced Usage
 
-### 自定义参数
+### Custom Parameters
 
 ```python
 from effimemo import ContextManager
@@ -144,22 +145,22 @@ manager = ContextManager(
     model_name="gpt-4",
     strategy="summary",
     preserve_system=True,
-    # Summary策略参数
+    # Summary strategy parameters
     openai_client=openai_client,
     summary_model="gpt-4",
     preserve_recent=5,
-    summary_prompt="自定义摘要提示词：{conversation}",
-    # 截断策略参数
+    summary_prompt="Custom summary prompt: {conversation}",
+    # Truncation strategy parameters
     min_content_tokens=50
 )
 ```
 
-### 消息验证
+### Message Validation
 
 ```python
 from effimemo.adapters import OpenAIAdapter
 
-# 验证消息格式
+# Validate message format
 messages = [
     {"role": "user", "content": "Hello"},
     {"role": "assistant", "content": "Hi there!"}
@@ -168,15 +169,15 @@ messages = [
 if OpenAIAdapter.validate_messages(messages):
     compressed = manager.compress(messages)
 else:
-    print("消息格式不正确")
+    print("Invalid message format")
 ```
 
-### 工具调用支持
+### Tool Calling Support
 
 ```python
-# 支持包含工具调用的消息
+# Support messages with tool calls
 messages_with_tools = [
-    {"role": "user", "content": "今天天气怎么样？"},
+    {"role": "user", "content": "What's the weather like today?"},
     {
         "role": "assistant",
         "tool_calls": [
@@ -184,7 +185,7 @@ messages_with_tools = [
                 "id": "call_123",
                 "function": {
                     "name": "get_weather",
-                    "arguments": '{"location": "北京"}'
+                    "arguments": '{"location": "Beijing"}'
                 }
             }
         ]
@@ -192,188 +193,136 @@ messages_with_tools = [
     {
         "role": "tool",
         "tool_call_id": "call_123",
-        "content": "北京今天晴天，气温25°C"
+        "content": "Beijing is sunny today, temperature 25°C"
     },
-    {"role": "assistant", "content": "今天北京天气很好，晴天，气温25°C。"}
+    {"role": "assistant", "content": "Today Beijing has great weather, sunny with a temperature of 25°C."}
 ]
 
-# 正常压缩，工具调用会被正确处理
+# Normal compression, tool calls are handled correctly
 compressed = manager.compress(messages_with_tools)
 ```
 
-## API参考
+## API Reference
 
 ### create_context_manager
 
-创建上下文管理器实例的便捷函数。
+Convenience function to create a context manager instance.
 
-**参数：**
-- `max_tokens` (int): 最大token数量，默认8192
-- `model_name` (str): 模型名称，默认"gpt-4"
-- `strategy` (str): 压缩策略，可选"first"、"last"、"selective"或"summary"，默认"last"
-- `preserve_system` (bool): 是否保留系统消息，默认True
+**Parameters:**
+- `max_tokens` (int): Maximum token count, default 8192
+- `model_name` (str): Model name, default "gpt-4"
+- `strategy` (str): Compression strategy, options: "first", "last", "selective", "summary", default "last"
+- `preserve_system` (bool): Whether to preserve system messages, default True
 
-**返回：**
-- `ContextManager`: 上下文管理器实例
+**Returns:**
+- `ContextManager`: Context manager instance
 
 ### ContextManager
 
-主要的上下文管理类。
+Main context management class.
 
-#### 初始化参数
+#### Initialization Parameters
 
-- `max_tokens` (int): 最大token数量
-- `model_name` (str): 模型名称
-- `strategy` (str): 压缩策略
-- `preserve_system` (bool): 是否保留系统消息
-- `token_counter`: 自定义token计数器
-- `openai_client`: OpenAI客户端实例（用于summary策略）
-- `summary_model` (str): 摘要模型名称，默认"gpt-3.5-turbo"
-- `preserve_recent` (int): 保留最近消息数量，默认3
-- `summary_prompt` (str): 自定义摘要提示词
-- `min_content_tokens` (int): 最小内容token数量，默认100
+- `max_tokens` (int): Maximum token count
+- `model_name` (str): Model name
+- `strategy` (str): Compression strategy
+- `preserve_system` (bool): Whether to preserve system messages
+- `token_counter`: Custom token counter
+- `openai_client`: OpenAI client instance (for summary strategy)
+- `summary_model` (str): Summary model name, default "gpt-3.5-turbo"
+- `preserve_recent` (int): Number of recent messages to preserve, default 3
+- `summary_prompt` (str): Custom summary prompt
+- `min_content_tokens` (int): Minimum content token count, default 100
 
-#### 主要方法
+#### Main Methods
 
 ##### compress(messages, reserve_tokens=0)
-压缩消息列表以适应上下文窗口。
+Compress message list to fit context window.
 
-**参数：**
-- `messages` (list): 消息列表
-- `reserve_tokens` (int): 为响应预留的token数量
+**Parameters:**
+- `messages` (list): Message list
+- `reserve_tokens` (int): Tokens to reserve for response
 
-**返回：**
-- `list`: 压缩后的消息列表
+**Returns:**
+- `list`: Compressed message list
 
 ##### count_tokens(messages)
-计算消息列表的token数量。
+Count tokens in message list.
 
-**参数：**
-- `messages` (list): 消息列表
+**Parameters:**
+- `messages` (list): Message list
 
-**返回：**
-- `int`: token数量
+**Returns:**
+- `int`: Token count
 
-## 性能对比
+## Performance Comparison
 
-不同策略的特点：
+Characteristics of different strategies:
 
-| 策略 | 优点 | 缺点 | 适用场景 |
-|------|------|------|----------|
-| **last** | 保持对话连续性 | 可能丢失重要历史信息 | 一般对话场景 |
-| **first** | 保留初始上下文 | 可能丢失最新信息 | 需要保持初始设定的场景 |
-| **selective** | 智能内容压缩 | 需要额外依赖 | 内容密集型对话 |
-| **summary** | 保留关键信息 | 需要API调用，有延迟 | 长期对话记忆 |
+| Strategy | Advantages | Disadvantages | Use Cases |
+|----------|------------|---------------|-----------|
+| **last** | Maintains conversation continuity | May lose important historical information | General conversation scenarios |
+| **first** | Preserves initial context | May lose latest information | Scenarios requiring initial settings |
+| **selective** | Intelligent content compression | Requires additional dependencies | Content-intensive conversations |
+| **summary** | Preserves key information | Requires API calls, has latency | Long-term conversation memory |
 
-## 开发指南
+## Development Guide
 
-### 环境设置
+### Environment Setup
 
 ```bash
-# 克隆仓库
+# Clone repository
 git clone https://github.com/BetterAndBetterII/effimemo.git
 cd effimemo
 
-# 创建虚拟环境
+# Create virtual environment
 python -m venv .venv
 source .venv/bin/activate  # Linux/Mac
-# 或
+# or
 .venv\Scripts\activate  # Windows
 
-# 安装开发依赖
+# Install development dependencies
 pip install -e .[dev,openai,compression]
 ```
 
-### 运行测试
+### Running Tests
 
 ```bash
-# 运行所有测试
+# Run all tests
 pytest
 
-# 运行测试并生成覆盖率报告
+# Run tests with coverage report
 pytest --cov=effimemo --cov-report=html
 
-# 运行特定测试文件
+# Run specific test file
 pytest tests/test_manager.py
 
-# 运行特定测试
+# Run specific test
 pytest tests/test_manager.py::TestContextManager::test_first_strategy
 ```
 
-### 代码质量检查
+### Code Quality Checks
 
 ```bash
-# 代码格式化
+# Code formatting
 black .
 isort .
 
-# 代码风格检查
+# Code style checks
 flake8 effimemo tests
 
-# 运行所有质量检查
+# Run all quality checks
 black . && isort . && flake8 effimemo tests && pytest --cov=effimemo
 ```
 
-### 测试覆盖率
+### Test Coverage
 
-当前测试覆盖率：**80%+**
+Current test coverage: **80%+**
 
-主要测试模块：
-- ✅ **Context Manager** - 核心管理器功能
-- ✅ **Truncation Strategies** - 截断策略（first/last）
-- ✅ **Summary Strategy** - 摘要压缩策略
-- ✅ **Compression Strategy** - 选择性压缩策略
-- ✅ **Token Counter** - Token计数功能
-- ✅ **OpenAI Adapter** - OpenAI集成适配器
+## License
 
-### 性能测试
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-项目包含完整的性能比较测试，可以评估不同策略的压缩效果：
+## Author
 
-```bash
-# 运行压缩策略比较测试
-pytest tests/test_compression_comparison.py::TestCompressionComparison::test_compression_comparison -v
-```
-
-测试结果示例：
-- **Summary策略**：压缩率最高（~98%），适合长对话历史
-- **Last策略**：保留最新信息（~61%），适合连续对话
-- **First策略**：保留早期信息（~64%），适合保持上下文完整性
-
-## 贡献指南
-
-1. Fork 项目
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开 Pull Request
-
-### 提交前检查清单
-
-- [ ] 代码通过所有测试
-- [ ] 新功能包含相应测试
-- [ ] 代码符合项目风格规范
-- [ ] 更新了相关文档
-- [ ] 测试覆盖率不低于80%
-
-## 许可证
-
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
-
-## 更新日志
-
-### v0.1.1 (2024-01-XX)
-- 🐛 修复版本号同步问题
-- 📝 完善README文档和API示例
-- ✅ 提高测试覆盖率至80%+
-- 🔧 优化项目配置和构建流程
-
-### v0.1.0 (2024-01-XX)
-- 🎉 首次发布
-- ✨ 支持四种压缩策略（first/last/selective/summary）
-- 🔧 OpenAI API集成
-- 📦 完整的工具调用支持
-
-## 作者
-
-betterandbetterii - betterandbetterii@gmail.com
+betterandbetterii
