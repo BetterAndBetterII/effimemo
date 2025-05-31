@@ -2,7 +2,7 @@
 effimemo package setup file
 """
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 # 读取README文件
 with open("README.md", "r", encoding="utf-8") as fh:

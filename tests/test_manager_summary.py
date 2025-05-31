@@ -3,6 +3,7 @@
 """
 
 from unittest.mock import Mock
+
 from effimemo.manager import ContextManager
 
 

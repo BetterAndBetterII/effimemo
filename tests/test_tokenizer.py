@@ -1,5 +1,6 @@
 import pytest
-from effimemo.core.tokenizer import TiktokenCounter, CachedTokenCounter
+
+from effimemo.core.tokenizer import CachedTokenCounter, TiktokenCounter
 
 
 class TestTokenCounter:
@@ -156,10 +157,10 @@ class TestTokenCounter:
         try:
             # 尝试导入OpenAI库的消息参数类型
             from openai.types.chat import (
-                ChatCompletionSystemMessageParam,
-                ChatCompletionUserMessageParam,
                 ChatCompletionAssistantMessageParam,
+                ChatCompletionSystemMessageParam,
                 ChatCompletionToolMessageParam,
+                ChatCompletionUserMessageParam,
             )
 
             # 创建真实的OpenAI消息参数对象

@@ -1,7 +1,9 @@
+from unittest.mock import MagicMock, Mock
+
 import pytest
-from unittest.mock import Mock, MagicMock
-from effimemo.strategies.summary import SummaryCompressionStrategy
+
 from effimemo.core.tokenizer import TiktokenCounter
+from effimemo.strategies.summary import SummaryCompressionStrategy
 
 
 class TestSummaryCompressionStrategy:

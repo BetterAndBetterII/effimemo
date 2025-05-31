@@ -3,10 +3,12 @@
 """
 
 import json
-import pytest
 from unittest.mock import Mock
-from effimemo.manager import ContextManager
+
+import pytest
+
 from effimemo.core.tokenizer import TiktokenCounter
+from effimemo.manager import ContextManager
 
 
 class TestCompressionComparison:

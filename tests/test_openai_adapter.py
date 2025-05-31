@@ -1,4 +1,5 @@
 import pytest
+
 from effimemo.adapters.openai import OpenAIAdapter
 
 

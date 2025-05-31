@@ -1,9 +1,10 @@
 import pytest
+
+from effimemo.core.tokenizer import TiktokenCounter
 from effimemo.strategies.truncation import (
     FirstTruncationStrategy,
     LastTruncationStrategy,
 )
-from effimemo.core.tokenizer import TiktokenCounter
 
 
 class TestTruncationStrategies:

@@ -3,9 +3,9 @@
 """
 
 from .base import ContextStrategy
-from .truncation import FirstTruncationStrategy, LastTruncationStrategy
 from .compression import SelectiveCompressionStrategy
 from .summary import SummaryCompressionStrategy
+from .truncation import FirstTruncationStrategy, LastTruncationStrategy
 
 __all__ = [
     "ContextStrategy",
