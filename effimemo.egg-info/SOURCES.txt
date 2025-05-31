@@ -1,6 +1,7 @@
 LICENSE
 MANIFEST.in
 README.md
+pyproject.toml
 setup.cfg
 setup.py
 effimemo/__init__.py
@@ -17,8 +18,10 @@ effimemo/core/tokenizer.py
 effimemo/strategies/__init__.py
 effimemo/strategies/base.py
 effimemo/strategies/compression.py
+effimemo/strategies/summary.py
 effimemo/strategies/truncation.py
 tests/test_manager.py
 tests/test_openai_adapter.py
+tests/test_summary_strategy.py
 tests/test_tokenizer.py
 tests/test_truncation.py

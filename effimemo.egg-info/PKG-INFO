@@ -2,13 +2,16 @@ Metadata-Version: 2.4
 Name: effimemo
 Version: 0.1.0
 Summary: A Python package for managing LLM context windows
-Home-page: https://github.com/manus-ai/effimemo
-Author: Manus AI
-Author-email: contact@manus.ai
+Home-page: https://github.com/betterandbetteri/effimemo
+Author: betterandbetterii
+Author-email: betterandbetterii <betterandbetterii@gmail.com>
+Maintainer-email: betterandbetterii <betterandbetterii@gmail.com>
 License: MIT
-Project-URL: Bug Reports, https://github.com/manus-ai/effimemo/issues
-Project-URL: Source, https://github.com/manus-ai/effimemo
-Keywords: llm context management token window ai chatbot
+Project-URL: Homepage, https://github.com/betterandbetteri/effimemo
+Project-URL: Repository, https://github.com/betterandbetteri/effimemo
+Project-URL: Issues, https://github.com/betterandbetteri/effimemo/issues
+Project-URL: Changelog, https://github.com/betterandbetteri/effimemo/blob/main/CHANGELOG.md
+Keywords: llm,context,management,token,window,ai,chatbot
 Classifier: Development Status :: 4 - Beta
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: MIT License
@@ -24,19 +27,20 @@ Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: tiktoken>=0.5.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: black>=23.0; extra == "dev"
+Requires-Dist: isort>=5.0; extra == "dev"
+Requires-Dist: flake8>=6.0; extra == "dev"
+Provides-Extra: openai
+Requires-Dist: openai>=1.0.0; extra == "openai"
+Provides-Extra: compression
+Requires-Dist: selective-context>=1.0.0; extra == "compression"
 Dynamic: author
-Dynamic: author-email
-Dynamic: classifier
-Dynamic: description
-Dynamic: description-content-type
 Dynamic: home-page
-Dynamic: keywords
-Dynamic: license
 Dynamic: license-file
-Dynamic: project-url
-Dynamic: requires-dist
 Dynamic: requires-python
-Dynamic: summary
 
 # EffiMemo
 
