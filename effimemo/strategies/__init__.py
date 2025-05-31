@@ -12,5 +12,5 @@ __all__ = [
     "FirstTruncationStrategy",
     "LastTruncationStrategy",
     "SelectiveCompressionStrategy",
-    "SummaryCompressionStrategy"
+    "SummaryCompressionStrategy",
 ]
