@@ -227,3 +227,134 @@ class TestTruncationStrategies:
                 current_index = messages.index(message)
                 assert current_index > prev_index, "消息顺序应该保持"
                 prev_index = current_index
+
+    def test_last_truncation_assistant_with_tool_calls(self):
+        """测试last策略处理assistant的工具调用消息"""
+        from effimemo.strategies.truncation import LastTruncationStrategy
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        strategy = LastTruncationStrategy()
+        counter = TiktokenCounter()
+        
+        messages = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "What's the weather?"},
+            {"role": "assistant", "tool_calls": [
+                {"id": "call_1", "type": "function", "function": {"name": "get_weather", "arguments": "{}"}}
+            ]},
+            {"role": "tool", "tool_call_id": "call_1", "content": "Sunny"},
+            {"role": "assistant", "content": "It's sunny today!"}
+        ]
+        
+        # 设置一个较小的token限制来触发截断
+        result = strategy.compress(messages, 100, counter)
+        
+        # 验证结果
+        assert len(result) > 0
+        assert counter.count_messages(result) <= 100
+        
+    def test_last_truncation_list_content_truncation(self):
+        """测试last策略处理列表类型content的截断"""
+        from effimemo.strategies.truncation import LastTruncationStrategy
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        strategy = LastTruncationStrategy()
+        counter = TiktokenCounter()
+        
+        messages = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": [
+                {"type": "text", "text": "This is a very long message that should be truncated when the token limit is exceeded. " * 50},
+                {"type": "image", "image_url": {"url": "http://example.com/image.jpg"}}
+            ]}
+        ]
+        
+        # 设置一个较小的token限制来触发截断
+        result = strategy.compress(messages, 300, counter)
+        
+        # 验证结果
+        assert len(result) > 0
+        assert counter.count_messages(result) <= 300
+        
+        # 检查是否有用户消息（可能被截断或保留）
+        user_messages = [msg for msg in result if msg["role"] == "user"]
+        # 如果有用户消息，检查列表content是否被正确处理
+        if user_messages:
+            user_message = user_messages[0]
+            assert isinstance(user_message["content"], list)
+        
+    def test_first_truncation_list_content_truncation(self):
+        """测试first策略处理列表类型content的截断"""
+        from effimemo.strategies.truncation import FirstTruncationStrategy
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        strategy = FirstTruncationStrategy()
+        counter = TiktokenCounter()
+        
+        messages = [
+            {"role": "system", "content": [
+                {"type": "text", "text": "This is a very long system message that should be truncated when the token limit is exceeded. " * 20},
+                {"type": "image", "image_url": {"url": "http://example.com/image.jpg"}}
+            ]},
+            {"role": "user", "content": "Hello"}
+        ]
+        
+        # 设置一个较大的token限制，确保系统消息可以被截断而不是完全移除
+        result = strategy.compress(messages, 500, counter)
+        
+        # 验证结果
+        assert len(result) > 0
+        assert counter.count_messages(result) <= 500
+        
+        # 检查系统消息的列表content是否被正确处理
+        system_message = next((msg for msg in result if msg["role"] == "system"), None)
+        assert system_message is not None
+        assert isinstance(system_message["content"], list)
+        
+    def test_truncation_with_tool_role_message(self):
+        """测试截断策略处理tool角色消息"""
+        from effimemo.strategies.truncation import LastTruncationStrategy
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        strategy = LastTruncationStrategy()
+        counter = TiktokenCounter()
+        
+        messages = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "Call a function"},
+            {"role": "assistant", "tool_calls": [
+                {"id": "call_1", "type": "function", "function": {"name": "test_func", "arguments": "{}"}}
+            ]},
+            {"role": "tool", "tool_call_id": "call_1", "content": "Function result"},
+            {"role": "user", "content": "Thanks"}
+        ]
+        
+        # 设置一个较小的token限制
+        result = strategy.compress(messages, 150, counter)
+        
+        # 验证结果
+        assert len(result) > 0
+        assert counter.count_messages(result) <= 150
+        
+    def test_truncation_message_without_content(self):
+        """测试截断策略处理没有content字段的消息"""
+        from effimemo.strategies.truncation import LastTruncationStrategy
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        strategy = LastTruncationStrategy()
+        counter = TiktokenCounter()
+        
+        messages = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "assistant", "tool_calls": [
+                {"id": "call_1", "type": "function", "function": {"name": "test_func", "arguments": "{}"}}
+            ]},  # 没有content字段
+            {"role": "user", "content": "Hello"}
+        ]
+        
+        # 设置一个较小的token限制
+        result = strategy.compress(messages, 100, counter)
+        
+        # 验证结果
+        assert len(result) > 0
+        assert counter.count_messages(result) <= 100

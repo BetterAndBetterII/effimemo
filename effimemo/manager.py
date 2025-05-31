@@ -6,6 +6,7 @@ from .core.tokenizer import TiktokenCounter
 from .strategies.compression import SelectiveCompressionStrategy
 from .strategies.summary import SummaryCompressionStrategy
 from .strategies.truncation import FirstTruncationStrategy, LastTruncationStrategy
+from .strategies.base import ContextStrategy
 
 
 class ContextManager:
@@ -67,6 +68,9 @@ class ContextManager:
                 preserve_recent=preserve_recent,
                 summary_prompt=summary_prompt,
             )
+        # 如果是ContextStrategy的子类
+        elif isinstance(strategy, ContextStrategy):
+            self.strategy = strategy
         else:
             raise ValueError(f"不支持的策略: {strategy}")
 

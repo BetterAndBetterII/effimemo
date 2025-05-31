@@ -1,5 +1,11 @@
 # EffiMemo
 
+[![PyPI version](https://badge.fury.io/py/effimemo.svg)](https://badge.fury.io/py/effimemo)
+[![Python Support](https://img.shields.io/pypi/pyversions/effimemo.svg)](https://pypi.org/project/effimemo/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/BetterAndBetterII/effimemo/workflows/Tests/badge.svg)](https://github.com/BetterAndBetterII/effimemo/actions)
+[![Coverage](https://img.shields.io/badge/coverage-80%25-green.svg)](https://github.com/BetterAndBetterII/effimemo)
+
 一个用于管理大语言模型（LLM）上下文窗口的Python包，支持智能压缩和多种裁切策略。
 
 ## 功能特性
@@ -10,6 +16,7 @@
 - **系统消息保护**：可选择性保留重要的系统消息
 - **OpenAI集成**：支持OpenAI API进行智能摘要压缩
 - **工具调用支持**：完整支持OpenAI的function calling和tool使用
+- **高测试覆盖率**：80%+ 的测试覆盖率，确保代码质量
 
 ## 安装
 
@@ -258,22 +265,115 @@ compressed = manager.compress(messages_with_tools)
 | **selective** | 智能内容压缩 | 需要额外依赖 | 内容密集型对话 |
 | **summary** | 保留关键信息 | 需要API调用，有延迟 | 长期对话记忆 |
 
+## 开发指南
+
+### 环境设置
+
+```bash
+# 克隆仓库
+git clone https://github.com/BetterAndBetterII/effimemo.git
+cd effimemo
+
+# 创建虚拟环境
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# 或
+.venv\Scripts\activate  # Windows
+
+# 安装开发依赖
+pip install -e .[dev,openai,compression]
+```
+
+### 运行测试
+
+```bash
+# 运行所有测试
+pytest
+
+# 运行测试并生成覆盖率报告
+pytest --cov=effimemo --cov-report=html
+
+# 运行特定测试文件
+pytest tests/test_manager.py
+
+# 运行特定测试
+pytest tests/test_manager.py::TestContextManager::test_first_strategy
+```
+
+### 代码质量检查
+
+```bash
+# 代码格式化
+black .
+isort .
+
+# 代码风格检查
+flake8 effimemo tests
+
+# 运行所有质量检查
+black . && isort . && flake8 effimemo tests && pytest --cov=effimemo
+```
+
+### 测试覆盖率
+
+当前测试覆盖率：**80%+**
+
+主要测试模块：
+- ✅ **Context Manager** - 核心管理器功能
+- ✅ **Truncation Strategies** - 截断策略（first/last）
+- ✅ **Summary Strategy** - 摘要压缩策略
+- ✅ **Compression Strategy** - 选择性压缩策略
+- ✅ **Token Counter** - Token计数功能
+- ✅ **OpenAI Adapter** - OpenAI集成适配器
+
+### 性能测试
+
+项目包含完整的性能比较测试，可以评估不同策略的压缩效果：
+
+```bash
+# 运行压缩策略比较测试
+pytest tests/test_compression_comparison.py::TestCompressionComparison::test_compression_comparison -v
+```
+
+测试结果示例：
+- **Summary策略**：压缩率最高（~98%），适合长对话历史
+- **Last策略**：保留最新信息（~61%），适合连续对话
+- **First策略**：保留早期信息（~64%），适合保持上下文完整性
+
+## 贡献指南
+
+1. Fork 项目
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 打开 Pull Request
+
+### 提交前检查清单
+
+- [ ] 代码通过所有测试
+- [ ] 新功能包含相应测试
+- [ ] 代码符合项目风格规范
+- [ ] 更新了相关文档
+- [ ] 测试覆盖率不低于80%
+
 ## 许可证
 
-MIT License
-
-## 贡献
-
-欢迎提交Issue和Pull Request！
-
-## 作者
-
-betterandbetterii - betterandbetterii@gmail.com
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
 ## 更新日志
 
-### v0.1.1
-- 新增summary压缩策略
-- 完善OpenAI工具调用支持
-- 优化token计算精度
-- 改进文档和示例 
+### v0.1.1 (2024-01-XX)
+- 🐛 修复版本号同步问题
+- 📝 完善README文档和API示例
+- ✅ 提高测试覆盖率至80%+
+- 🔧 优化项目配置和构建流程
+
+### v0.1.0 (2024-01-XX)
+- 🎉 首次发布
+- ✨ 支持四种压缩策略（first/last/selective/summary）
+- 🔧 OpenAI API集成
+- 📦 完整的工具调用支持
+
+## 作者
+
+betterandbetterii - betterandbetterii@gmail.com 

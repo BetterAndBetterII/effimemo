@@ -562,3 +562,59 @@ class TestTokenCounter:
         assert len(tool_calls) == 2
         assert tool_calls[0]["id"] == "call_1"
         assert tool_calls[1]["id"] == "call_2"
+
+    def test_tiktoken_encoding_fallback(self):
+        """测试tiktoken编码器回退机制"""
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        # 测试未知模型名称的回退
+        counter = TiktokenCounter("unknown-model")
+        assert counter.count("hello world") > 0
+        
+    def test_tiktoken_empty_text(self):
+        """测试空文本的处理"""
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        counter = TiktokenCounter()
+        assert counter.count("") == 0
+        assert counter.count(None) == 0
+        
+    def test_message_with_name_field(self):
+        """测试包含name字段的消息"""
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        counter = TiktokenCounter()
+        messages = [
+            {"role": "user", "name": "alice", "content": "Hello"}
+        ]
+        
+        # name字段会减少1个token
+        tokens = counter.count_messages(messages)
+        assert tokens > 0
+        
+    def test_pydantic_like_object(self):
+        """测试类似Pydantic的对象"""
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        class MockPydanticMessage:
+            def model_dump(self):
+                return {"role": "user", "content": "Hello"}
+        
+        counter = TiktokenCounter()
+        messages = [MockPydanticMessage()]
+        tokens = counter.count_messages(messages)
+        assert tokens > 0
+        
+    def test_object_with_dict(self):
+        """测试有__dict__属性的对象"""
+        from effimemo.core.tokenizer import TiktokenCounter
+        
+        class MockMessage:
+            def __init__(self):
+                self.role = "user"
+                self.content = "Hello"
+        
+        counter = TiktokenCounter()
+        messages = [MockMessage()]
+        tokens = counter.count_messages(messages)
+        assert tokens > 0

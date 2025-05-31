@@ -18,6 +18,7 @@ keywords = ["llm", "context", "management", "token", "window", "ai", "chatbot"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -34,11 +35,11 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0",
-    "pytest-cov>=4.0",
-    "black>=23.0",
-    "isort>=5.0",
-    "flake8>=6.0",
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "isort>=5.0.0",
+    "flake8>=5.0.0",
 ]
 openai = [
     "openai>=1.0.0",
@@ -48,9 +49,9 @@ compression = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/betterandbetteri/effimemo"
-Repository = "https://github.com/betterandbetteri/effimemo"
-Issues = "https://github.com/betterandbetteri/effimemo/issues"
+Homepage = "https://github.com/BetterAndBetterII/effimemo"
+Repository = "https://github.com/BetterAndBetterII/effimemo"
+Issues = "https://github.com/BetterAndBetterII/effimemo/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -86,16 +87,42 @@ testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "-v --tb=short"
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]
 
 [tool.coverage.run]
 source = ["effimemo"]
-omit = ["tests/*"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/.venv/*",
+]
 
 [tool.coverage.report]
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
     "raise AssertionError",
     "raise NotImplementedError",
-] 
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+show_missing = true
+precision = 2
+
+[tool.coverage.html]
+directory = "htmlcov" 
