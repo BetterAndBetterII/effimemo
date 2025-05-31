@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: effimemo
+Version: 0.1.0
+Summary: A Python package for managing LLM context windows
+Home-page: UNKNOWN
+Author: Manus AI
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+
+UNKNOWN
+
