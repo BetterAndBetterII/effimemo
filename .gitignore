@@ -2,3 +2,5 @@
 .venv
 *_cache/
 *.log
+dist/
+*.egg-info/
