@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: effimemo
-Version: 0.1.0
+Version: 0.1.1
 Summary: A Python package for managing LLM context windows
 Home-page: https://github.com/betterandbetteri/effimemo
 Author: betterandbetterii
