@@ -376,4 +376,4 @@ pytest tests/test_compression_comparison.py::TestCompressionComparison::test_com
 
 ## 作者
 
-betterandbetterii - betterandbetterii@gmail.com 
+betterandbetterii - betterandbetterii@gmail.com

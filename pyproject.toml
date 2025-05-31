@@ -40,6 +40,7 @@ dev = [
     "black>=22.0.0",
     "isort>=5.0.0",
     "flake8>=5.0.0",
+    "pre-commit>=3.0.0",
 ]
 openai = [
     "openai>=1.0.0",
@@ -125,4 +126,4 @@ show_missing = true
 precision = 2
 
 [tool.coverage.html]
-directory = "htmlcov" 
+directory = "htmlcov"

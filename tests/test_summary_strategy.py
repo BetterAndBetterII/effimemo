@@ -103,9 +103,7 @@ class TestSummaryCompressionStrategy:
 
     def test_create_summary_with_openai_client(self):
         """测试使用OpenAI客户端创建摘要"""
-        mock_client = self.create_mock_openai_client(
-            "用户询问了天气，助手提供了北京的天气信息"
-        )
+        mock_client = self.create_mock_openai_client("用户询问了天气，助手提供了北京的天气信息")
         strategy = SummaryCompressionStrategy(openai_client=mock_client)
 
         messages = [
@@ -294,9 +292,7 @@ class TestSummaryCompressionStrategy:
 
     def test_compress_with_fallback_truncation(self):
         """测试摘要后仍需要截断的情况"""
-        mock_client = self.create_mock_openai_client(
-            "一个很长的摘要" * 100
-        )  # 创建一个很长的摘要
+        mock_client = self.create_mock_openai_client("一个很长的摘要" * 100)  # 创建一个很长的摘要
         strategy = SummaryCompressionStrategy(
             openai_client=mock_client, preserve_recent=1
         )

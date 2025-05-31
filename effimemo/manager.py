@@ -3,10 +3,10 @@
 """
 
 from .core.tokenizer import TiktokenCounter
+from .strategies.base import ContextStrategy
 from .strategies.compression import SelectiveCompressionStrategy
 from .strategies.summary import SummaryCompressionStrategy
 from .strategies.truncation import FirstTruncationStrategy, LastTruncationStrategy
-from .strategies.base import ContextStrategy
 
 
 class ContextManager:
