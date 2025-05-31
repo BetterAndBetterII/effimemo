@@ -160,5 +160,159 @@
             "user_message_branch_ids": [],
             "assistant_message_branch_ids": []
         }
+    ],
+    [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "最新的英伟达新闻"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "tool_call",
+                    "text": "",
+                    "tool_call": [
+                        {
+                            "id": "call_rxdw7ytzmdmcmdhwfwg8x917",
+                            "type": "function",
+                            "name": "web_search",
+                            "function": {
+                                "name": "web_search",
+                                "arguments": "{\"keyword\":\"latest Nvidia news 2025\"}"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "tool_result",
+                    "text": "",
+                    "tool_result": {
+                        "role": "tool",
+                        "tool_call_id": "call_rxdw7ytzmdmcmdhwfwg8x917",
+                        "name": "web_search",
+                        "content": "{\"returned_values\": {\"search_results\": {\"value\": \"# The following contents are the search results related to the user's message:\\n<search-results>\\n\\n</search-results>\\nIn the search results I provide to you, each result is formatted as [webpage X begin; {url}; {title}]...[webpage X end], where X represents the numerical index of each article, {url} denotes the URL wrapped in curly braces, and {title} denotes the webpage title wrapped in curly braces. Please cite the context at the end of the relevant sentence when appropriate. Use the citation format [title](url) in the corresponding part of your answer. If the title is too long, please abbreviate it to the first few words. If a sentence is derived from multiple contexts, list all relevant citation numbers. Be sure not to cluster all citations at the end; instead, include them in the corresponding parts of the answer. Make sure the urls in your citation are the same as what are provided.\\nWhen responding, please keep the following points in mind:\\n- Today is 2025-05-31.\\n- Not all content in the search results is closely related to the user's question. You need to evaluate and filter the search results based on the question.\\n- For listing-type questions (e.g., listing all flight information), try to limit the answer to 10 key points and inform the user that they can refer to the search sources for complete information. Prioritize providing the most complete and relevant items in the list. Avoid mentioning content not provided in the search results unless necessary.\\n- For creative tasks (e.g., writing an essay), ensure that references are cited within the body of the text, rather than only at the end of the text. You need to interpret and summarize the user's requirements, choose an appropriate format, fully utilize the search results, extract key information, and generate an answer that is insightful, creative, and professional. Extend the length of your response as much as possible, addressing each point in detail and from multiple perspectives, ensuring the content is rich and thorough.\\n- If the response is lengthy, structure it well and summarize it in paragraphs. If a point-by-point format is needed, try to limit it to 5 points and merge related content.\\n- For objective Q&A, if the answer is very brief, you may add one or two related sentences to enrich the content.\\n- Choose an appropriate and visually appealing format for your response based on the user's requirements and the content of the answer, ensuring strong readability.\\n- Your answer should synthesize information from multiple relevant webpages and avoid repeatedly citing the same webpage.\\n- Unless the user requests otherwise, your response should be in the same language as the user's question.\", \"type\": \"text\"}}}"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": "目前没有找到与“2025年最新英伟达新闻”直接相关的内容。以下是一些可能相关的信息和建议：\n\n1. **英伟达的最新动态**：英伟达（NVIDIA）作为全球领先的GPU和AI技术公司，通常会发布关于新产品、技术突破和市场动态的新闻。您可以访问英伟达的[官方网站](https://www.nvidia.com)或关注其官方社交媒体账号以获取最新消息。\n\n2. **行业新闻**：英伟达的新闻经常出现在科技和财经媒体上，例如《TechCrunch》、《The Verge》或《CNBC》。您可以访问这些网站并搜索“NVIDIA”以获取最新报道。\n\n3. **AI与GPU技术**：英伟达在人工智能和高性能计算领域持续创新，关注这些领域的最新进展可能会间接了解英伟达的动态。\n\n如果您有更具体的需求或问题，请告诉我，我会尽力为您提供帮助！"
+                }
+            ]
+        },
+        {
+            "id": "",
+            "timestamp": 1748703611766,
+            "session_state": "d62e7437-b85b-4f56-8c8c-f9eacec0bba1",
+            "user_message_branch_ids": [],
+            "assistant_message_branch_ids": []
+        }
+    ],
+    [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "同时搜索腾讯和阿里巴巴的股票价格"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "tool_call",
+                    "text": "",
+                    "tool_call": [
+                        {
+                            "id": "call_mi2ymoi2i3ztxa3vys162m2u",
+                            "type": "function",
+                            "name": "web_search",
+                            "function": {
+                                "name": "web_search",
+                                "arguments": "{\"keyword\":\"Tencent stock price 2025-05-31\"}"
+                            }
+                        },
+                        {
+                            "id": "call_krhlp16qdvnroste78u7kzfo",
+                            "type": "function",
+                            "name": "web_search",
+                            "function": {
+                                "name": "web_search",
+                                "arguments": "{\"keyword\":\"Alibaba stock price 2025-05-31\"}"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "tool_result",
+                    "text": "",
+                    "tool_result": {
+                        "role": "tool",
+                        "tool_call_id": "call_mi2ymoi2i3ztxa3vys162m2u",
+                        "name": "web_search",
+                        "content": "{\"returned_values\": {\"search_results\": {\"value\": \"# The following contents are the search results related to the user's message:\\n<search-results>\\n\\n</search-results>\\nIn the search results I provide to you, each result is formatted as [webpage X begin; {url}; {title}]...[webpage X end], where X represents the numerical index of each article, {url} denotes the URL wrapped in curly braces, and {title} denotes the webpage title wrapped in curly braces. Please cite the context at the end of the relevant sentence when appropriate. Use the citation format [title](url) in the corresponding part of your answer. If the title is too long, please abbreviate it to the first few words. If a sentence is derived from multiple contexts, list all relevant citation numbers. Be sure not to cluster all citations at the end; instead, include them in the corresponding parts of the answer. Make sure the urls in your citation are the same as what are provided.\\nWhen responding, please keep the following points in mind:\\n- Today is 2025-05-31.\\n- Not all content in the search results is closely related to the user's question. You need to evaluate and filter the search results based on the question.\\n- For listing-type questions (e.g., listing all flight information), try to limit the answer to 10 key points and inform the user that they can refer to the search sources for complete information. Prioritize providing the most complete and relevant items in the list. Avoid mentioning content not provided in the search results unless necessary.\\n- For creative tasks (e.g., writing an essay), ensure that references are cited within the body of the text, rather than only at the end of the text. You need to interpret and summarize the user's requirements, choose an appropriate format, fully utilize the search results, extract key information, and generate an answer that is insightful, creative, and professional. Extend the length of your response as much as possible, addressing each point in detail and from multiple perspectives, ensuring the content is rich and thorough.\\n- If the response is lengthy, structure it well and summarize it in paragraphs. If a point-by-point format is needed, try to limit it to 5 points and merge related content.\\n- For objective Q&A, if the answer is very brief, you may add one or two related sentences to enrich the content.\\n- Choose an appropriate and visually appealing format for your response based on the user's requirements and the content of the answer, ensuring strong readability.\\n- Your answer should synthesize information from multiple relevant webpages and avoid repeatedly citing the same webpage.\\n- Unless the user requests otherwise, your response should be in the same language as the user's question.\", \"type\": \"text\"}}}"
+                    }
+                },
+                {
+                    "type": "tool_result",
+                    "text": "",
+                    "tool_result": {
+                        "role": "tool",
+                        "tool_call_id": "call_krhlp16qdvnroste78u7kzfo",
+                        "name": "web_search",
+                        "content": "{\"returned_values\": {\"search_results\": {\"value\": \"# The following contents are the search results related to the user's message:\\n<search-results>\\n\\n</search-results>\\nIn the search results I provide to you, each result is formatted as [webpage X begin; {url}; {title}]...[webpage X end], where X represents the numerical index of each article, {url} denotes the URL wrapped in curly braces, and {title} denotes the webpage title wrapped in curly braces. Please cite the context at the end of the relevant sentence when appropriate. Use the citation format [title](url) in the corresponding part of your answer. If the title is too long, please abbreviate it to the first few words. If a sentence is derived from multiple contexts, list all relevant citation numbers. Be sure not to cluster all citations at the end; instead, include them in the corresponding parts of the answer. Make sure the urls in your citation are the same as what are provided.\\nWhen responding, please keep the following points in mind:\\n- Today is 2025-05-31.\\n- Not all content in the search results is closely related to the user's question. You need to evaluate and filter the search results based on the question.\\n- For listing-type questions (e.g., listing all flight information), try to limit the answer to 10 key points and inform the user that they can refer to the search sources for complete information. Prioritize providing the most complete and relevant items in the list. Avoid mentioning content not provided in the search results unless necessary.\\n- For creative tasks (e.g., writing an essay), ensure that references are cited within the body of the text, rather than only at the end of the text. You need to interpret and summarize the user's requirements, choose an appropriate format, fully utilize the search results, extract key information, and generate an answer that is insightful, creative, and professional. Extend the length of your response as much as possible, addressing each point in detail and from multiple perspectives, ensuring the content is rich and thorough.\\n- If the response is lengthy, structure it well and summarize it in paragraphs. If a point-by-point format is needed, try to limit it to 5 points and merge related content.\\n- For objective Q&A, if the answer is very brief, you may add one or two related sentences to enrich the content.\\n- Choose an appropriate and visually appealing format for your response based on the user's requirements and the content of the answer, ensuring strong readability.\\n- Your answer should synthesize information from multiple relevant webpages and avoid repeatedly citing the same webpage.\\n- Unless the user requests otherwise, your response should be in the same language as the user's question.\", \"type\": \"text\"}}}"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": "目前无法从搜索结果中获取腾讯和阿里巴巴的股票价格信息。以下是一些建议，帮助您获取最新的股票价格：\n\n1. **访问金融网站**：您可以通过访问如 [Yahoo Finance](https://finance.yahoo.com)、[Bloomberg](https://www.bloomberg.com) 或 [Google Finance](https://www.google.com/finance) 等金融网站，直接搜索“Tencent stock price”和“Alibaba stock price”以获取最新数据。\n\n2. **股票交易平台**：如果您有股票交易账户，可以登录您的交易平台查看实时股票价格。\n\n3. **新闻媒体**：关注财经新闻媒体，如《CNBC》或《Reuters》，它们通常会报道重要公司的股票动态。\n\n如果您需要更具体的帮助或信息，请告诉我，我会尽力为您提供支持！"
+                }
+            ]
+        },
+        {
+            "id": "",
+            "timestamp": 1748703624580,
+            "session_state": "d62e7437-b85b-4f56-8c8c-f9eacec0bba1",
+            "user_message_branch_ids": [],
+            "assistant_message_branch_ids": []
+        }
+    ],
+    [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "这是谁的画？"
+                },
+                {
+                    "type": "image_url",
+                    "image_url": "file-Albert_Bierstadt_-_Among_the_Sierra_Nevada__California_-_Google_Art_Project_jpg-8212e6163b7cb771541584c761cb351bd2d40d18a1cc5bbbcdaa821872bf98e1"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "你好！请问有什么可以帮到你的吗？ 😊"
+                }
+            ]
+        },
+        {
+            "id": "",
+            "timestamp": 1748703672811,
+            "session_state": "d62e7437-b85b-4f56-8c8c-f9eacec0bba1",
+            "user_message_branch_ids": [],
+            "assistant_message_branch_ids": []
+        }
     ]
 ]
