@@ -10,11 +10,9 @@ License: MIT
 Project-URL: Homepage, https://github.com/betterandbetteri/effimemo
 Project-URL: Repository, https://github.com/betterandbetteri/effimemo
 Project-URL: Issues, https://github.com/betterandbetteri/effimemo/issues
-Project-URL: Changelog, https://github.com/betterandbetteri/effimemo/blob/main/CHANGELOG.md
 Keywords: llm,context,management,token,window,ai,chatbot
 Classifier: Development Status :: 4 - Beta
 Classifier: Intended Audience :: Developers
-Classifier: License :: OSI Approved :: MIT License
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9

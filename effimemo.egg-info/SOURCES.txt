@@ -20,7 +20,9 @@ effimemo/strategies/base.py
 effimemo/strategies/compression.py
 effimemo/strategies/summary.py
 effimemo/strategies/truncation.py
+tests/test_compression_comparison.py
 tests/test_manager.py
+tests/test_manager_summary.py
 tests/test_openai_adapter.py
 tests/test_summary_strategy.py
 tests/test_tokenizer.py
