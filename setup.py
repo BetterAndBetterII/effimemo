@@ -16,10 +16,10 @@ setup(
     long_description_content_type="text/markdown",
     author="betterandbetterii",
     author_email="betterandbetterii@gmail.com",
-    url="https://github.com/betterandbetteri/effimemo",
+    url="https://github.com/betterandbetterii/effimemo",
     project_urls={
-        "Bug Reports": "https://github.com/betterandbetteri/effimemo/issues",
-        "Source": "https://github.com/betterandbetteri/effimemo",
+        "Bug Reports": "https://github.com/betterandbetterii/effimemo/issues",
+        "Source": "https://github.com/betterandbetterii/effimemo",
     },
     packages=find_packages(),
     install_requires=[
