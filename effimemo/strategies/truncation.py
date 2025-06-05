@@ -5,6 +5,42 @@
 from .base import ContextStrategy
 
 
+def _truncate_by_tokens(text: str, max_tokens: int, token_counter) -> str:
+    """按照token数量截断字符串，如果可用则使用编码器加速"""
+
+    if not text:
+        return text
+
+    # 尝试直接使用tokenizer的编码器以避免多次编码
+    encoding = getattr(token_counter, "encoding", None)
+    if encoding is None and hasattr(token_counter, "base_counter"):
+        encoding = getattr(token_counter.base_counter, "encoding", None)
+
+    if encoding is not None:
+        tokens = encoding.encode(text)
+        if len(tokens) <= max_tokens:
+            return text
+        return encoding.decode(tokens[:max_tokens])
+
+    # 回退到二分查找方式
+    current_tokens = token_counter.count(text)
+    if current_tokens <= max_tokens:
+        return text
+
+    left, right = 0, len(text)
+    best_text = ""
+    while left <= right:
+        mid = (left + right) // 2
+        truncated = text[:mid]
+        tokens = token_counter.count(truncated)
+        if tokens <= max_tokens:
+            best_text = truncated
+            left = mid + 1
+        else:
+            right = mid - 1
+    return best_text
+
+
 class FirstTruncationStrategy(ContextStrategy):
     """保留前面消息的裁切策略，支持内容截断"""
 
@@ -20,41 +56,8 @@ class FirstTruncationStrategy(ContextStrategy):
         self.min_content_tokens = min_content_tokens
 
     def _truncate_string(self, text: str, max_tokens: int, token_counter) -> str:
-        """
-        截断字符串到指定的token数量
-
-        Args:
-            text: 要截断的文本
-            max_tokens: 最大token数量
-            token_counter: token计数器
-
-        Returns:
-            截断后的文本
-        """
-        if not text:
-            return text
-
-        # 如果文本已经在限制范围内，直接返回
-        current_tokens = token_counter.count(text)
-        if current_tokens <= max_tokens:
-            return text
-
-        # 二分查找最佳截断位置
-        left, right = 0, len(text)
-        best_text = ""
-
-        while left <= right:
-            mid = (left + right) // 2
-            truncated = text[:mid]
-            tokens = token_counter.count(truncated)
-
-            if tokens <= max_tokens:
-                best_text = truncated
-                left = mid + 1
-            else:
-                right = mid - 1
-
-        return best_text
+        """截断字符串到指定token数量"""
+        return _truncate_by_tokens(text, max_tokens, token_counter)
 
     def _handle_system_message_overflow(
         self, system_messages: list, max_tokens: int, token_counter
@@ -274,41 +277,8 @@ class LastTruncationStrategy(ContextStrategy):
         self.min_content_tokens = min_content_tokens
 
     def _truncate_string(self, text: str, max_tokens: int, token_counter) -> str:
-        """
-        截断字符串到指定的token数量
-
-        Args:
-            text: 要截断的文本
-            max_tokens: 最大token数量
-            token_counter: token计数器
-
-        Returns:
-            截断后的文本
-        """
-        if not text:
-            return text
-
-        # 如果文本已经在限制范围内，直接返回
-        current_tokens = token_counter.count(text)
-        if current_tokens <= max_tokens:
-            return text
-
-        # 二分查找最佳截断位置
-        left, right = 0, len(text)
-        best_text = ""
-
-        while left <= right:
-            mid = (left + right) // 2
-            truncated = text[:mid]
-            tokens = token_counter.count(truncated)
-
-            if tokens <= max_tokens:
-                best_text = truncated
-                left = mid + 1
-            else:
-                right = mid - 1
-
-        return best_text
+        """截断字符串到指定token数量"""
+        return _truncate_by_tokens(text, max_tokens, token_counter)
 
     def _handle_system_message_overflow(
         self, system_messages: list, max_tokens: int, token_counter
